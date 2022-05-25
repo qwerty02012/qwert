@@ -1,6 +1,6 @@
 from playsound import playsound
 from gtts import gTTS
-text="Sahil Gurnani"
+text=""
 language="en"
 texttosound=gTTS(text=text,lang=language)
 texttosound.save("output.mp3")
@@ -9,7 +9,7 @@ print("Sound Played")
 
 
 import speech_recognition as sr
-file="C:\\Sahil\\whatsweatherlike.wav"
+file="path"
 r=sr.Recognizer()
 with sr.AudioFile(file)as source:
     speechtotext= r.record(source)
@@ -48,7 +48,8 @@ for fileid in brown.fileids():
 
 import nltk
 from nltk.corpus import PlaintextCorpusReader
-corpusdir = "C:\\Users\\Sahil\\AppData\\Local\\Programs\\Python\\Python39\\sahil"
+corpusdir = "path"
+
 filelist = PlaintextCorpusReader(corpusdir,'.*')
 print('\n File List :\n')
 print(filelist.fileids())
@@ -69,7 +70,7 @@ for fileid in filelist.fileids() :
 
 import nltk
 from nltk import tokenize
-para="Hi!My name is Sahil Gurnani. Today we have NLP class and we will be learning NLTK related Practicals."
+para=""
 sents=tokenize.sent_tokenize(para)
 print("Sentence Tokenization\n-------------\n",sents)
 print('\nWord Tokenization\n-----------\n')
