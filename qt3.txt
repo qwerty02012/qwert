@@ -1,0 +1,302 @@
+
+18) Part of Speech Tagging and Chunking
+
+import nltk
+from nltk import tokenize
+nltk.download('punkt')
+from nltk import tag
+from nltk import chunk
+nltk.download('average_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
+text = "Exploring the world through travel has both positive and negative implications. On one hand, travelling can broaden the mind, introducing one to new cultures and experiences."
+sents = tokenize.sent_tokenize(text)
+print(sents)
+for i in range (len(sents)):
+ words = tokenize.word_tokenize(sents[i])
+ print(words)
+
+print()
+tagged_words = []
+for i in range (len(sents)):
+ tagged_words.append(tag.pos_tag(words))
+print(tagged_words)
+print()
+tree = []
+
+for i in range (len(sents)):
+
+ tree.append(chunk.ne_chunk(tagged_words[i]))
+
+print(tagged_words)
+
+
+
+19) Named Entity Recognition :-
+
+import nltk
+
+nltk.download('punkt')
+
+nltk.download('maxent_ne_chunker')
+
+nltk.download('averaged_perceptron_tagger')
+
+nltk.download('words')
+
+from nltk.tokenize import word_tokenize
+
+from nltk.tag import pos_tag
+
+from nltk import chunk
+
+text ="WASHINGTON -- In the wake of a string of abuses by New York police officers
+
+in the 1990s, Loretta E. Lynch, the top federal prosecutor in Brooklyn, spoke forcefully
+
+about the pain of a broken trust that African-Americans felt and said the responsibility for
+
+repairing generations of miscommunication and mistrust fell to law enforcement."
+
+for sent in nltk.sent_tokenize(text):
+
+ for chunk in nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize(sent))):
+
+ if hasattr(chunk, 'label'):
+
+ print(chunk.label(), ' '.join(c[0] for c in chunk))
+
+
+
+20) Define Grammar using NLTK
+
+ Analyze the sentence using the same :-
+
+import nltk
+
+from nltk import tokenize
+
+grammar1 = nltk.CFG.fromstring("""S ->VP
+
+ VP ->VP NP
+
+ NP -> Det NP
+
+ Det -> 'that'
+
+ NP -> singular Noun
+
+ NP -> 'flight'
+
+ VP -> 'Book' """)
+
+sentence = "Book that flight"
+
+for i in range (len(sentence)):
+
+ all_tokens = tokenize.word_tokenize(sentence)
+
+print(all_tokens)
+
+parser = nltk.ChartParser(grammar1)
+
+for tree in parser.parse(all_tokens):
+
+ print(tree)
+
+ tree.draw()
+
+
+
+21) Finite Automation ( 101+ ) :-
+
+def FA(s):
+
+ if len(s)<3:
+
+ return "REJECTED"
+
+ if s[0] == '1':
+
+ if s[1] == '0':
+
+ if s[2] == '1':
+
+ for i in range (3,len(s)):
+
+ if s[i]!='1':
+
+ return "REJECTED"
+
+ return "ACCEPTED"
+
+ return "REJECTED"
+
+ return "REJECTED"
+
+ return "REJECTED"
+
+input = ['1','10101','101','101111']
+
+for i in input:
+
+print(i,"is",FA(i))
+
+
+
+22) Finite Automation ( (a+b)*bba ) :-
+
+def FA(s):
+
+ size=0
+
+#scan complete string and make sure that it contains only 'a' & 'b'
+
+ for i in s:
+
+ if i=='a' or i=='b':
+
+ size+=1
+
+ else:
+
+ return "Rejected"
+
+#After checking that it contains only 'a' & 'b' #check it's length it should be 3 atleast
+
+ if size>=3:
+
+#check the last 3 elements if s[size-3]=='b':
+
+ if s[size-2]=='b':
+
+ if s[size-1]=='a':
+
+ return "Accepted" # if all 4 if true
+
+ return "Rejected" # else of 4th if
+
+ return "Rejected" # else of 3rd if return "Rejected" # else of 2nd if
+
+ return "Rejected" # else of 1st if
+
+inputs=['bba', 'ababbba', 'abba','abb', 'baba','bbb','']
+
+for i in inputs:
+
+ print(FA(i))
+
+
+
+23) Deductive Chart Parsing . :-
+
+import nltk
+
+from nltk import tokenize
+
+grammar1 = nltk.CFG.fromstring
+
+(""" S -> NP VP
+
+PP -> P NP
+
+NP -> Det N | Det N PP | 'I' VP -> V NP | VP PP
+
+Det -> 'a' | 'my'
+
+N -> 'bird' | 'balcony' V -> 'saw'
+
+P -> 'in'
+
+""")
+
+sentence = "I saw a bird in my balcony"
+
+for index in range(len(sentence)):
+
+ all_tokens = tokenize.word_tokenize(sentence)
+
+ print(all_tokens)
+
+# all_tokens = ['I', 'saw', 'a', 'bird', 'in', 'my', 'balcony'] parser =
+
+nltk.ChartParser(grammar1)
+
+parser = nltk.ChartParser(grammar1)
+
+for tree in parser.parse(all_tokens):
+
+ print(tree)
+
+ tree.draw()
+
+
+
+24) Text Tokenization using (1) Porter Stemmer,
+
+ (2) Lancaster Stemmer,
+
+ (3) Regular Expression Stemmer
+
+ (4) Snowball Stemmer
+
+ (5) WordNet Lemmatizer :-
+
+import nltk
+
+from nltk.stem import PorterStemmer
+
+word_stemmer = PorterStemmer()
+
+print(word_stemmer.stem('Organization'))
+
+print()
+
+import nltk
+
+from nltk.stem import LancasterStemmer
+
+word_stemmer = LancasterStemmer()
+
+print(word_stemmer.stem('Organization'))
+
+print()
+
+import nltk
+
+from nltk.stem import RegexpStemmer
+
+reg_stemmer = RegexpStemmer('ing$|s$|able$', min = 4)
+
+print(reg_stemmer.stem('Writing'))
+
+print()
+
+import nltk
+
+from nltk.stem import SnowballStemmer
+
+snow_stemmer = SnowballStemmer('english')
+
+print(snow_stemmer.stem('Writing'))
+
+print()
+
+
+
+25) WordNetLemmatizer :-
+
+from nltk.stem import WordNetLemmatizer
+
+lemmatizer = WordNetLemmatizer()
+
+print("word :\tlemma")
+
+print("rocks :", lemmatizer.lemmatize("rocks"))
+
+print("corpora :", lemmatizer.lemmatize("corpora"))
+
+# a denotes adjective in "pos"
+
+print("better :", lemmatizer.lemmatize("better", pos ="a"))
+
