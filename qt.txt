@@ -1,0 +1,166 @@
+import datetime
+import hashlib
+class MyBlock:
+	def __init__(self, previous_hash, block_data, timestamp):
+		self.previous_hash = previous_hash
+		self.block_data = block_data
+		self.timestamp = timestamp
+		self.hash = self.myhash()
+	def genesis_block():
+		return MyBlock("0", "Hello World", datetime.datetime.now());	
+	def myhash(self):
+		msghash = (str(self.previous_hash) + str(self.block_data) + str(self.timestamp))									
+		innerblockhash = hashlib.sha256(msghash.encode()).hexdigest().encode()							
+		Blockhash = hashlib.sha256(innerblockhash).hexdigest()
+		return Blockhash
+
+b1 = MyBlock.genesis_block(); print(b1.previous_hash); print(b1.block_data); print(b1.timestamp)
+print(b1.hash)
+
+num_block = int(input("Enter the number  of blocks "));
+blockchain = [MyBlock.genesis_block()]
+#print("Hash is:", blockchain[0].hash)
+
+for i in range(1, num_block+1):
+	blockchain.append(MyBlock(blockchain[i-1].hash,"Good Morning", datetime.datetime.now()))
+	print("Hash is:", blockchain[i-1].hash)
+
+
+
+
+
+
+
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+contract SahilForLoop {
+
+    uint256[] public numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    function countEvenNumbers() public view returns (uint256) {
+        uint256 count = 0;
+
+        for(uint256 i =0; i < numbers.length; i++) {
+            if(isEvenNumber(numbers[i])) {
+                count ++;
+            }
+        }
+    return count;
+    }
+
+    function isEvenNumber(uint256 number) public pure returns(bool) {
+        if(number % 2 == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+contract SahilArray 
+{
+    uint256[] public uintArray = [22,10,1,15];
+    string[] public stringArray = ['apple','watermelon','papaya', 'kiwi', 'blue berry']; 
+    uint256[][] public array2D = [ [10,20,30], [90,80,70] ];
+    string[] public values;
+    function addValue(string memory value) public 
+    {
+        values.push(value);
+    }
+    function valueCount() public view returns(uint256) 
+    {
+    return values.length;
+    }    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+contract Storage {
+
+    struct student
+    {   
+        string name;
+        string clas;
+        uint256 roll;   
+    }
+    student[21] st;
+    function setstruc() public
+    {
+        uint256 i=0;
+        while(i<=19)
+        {
+            st[i]=student("Sahil","Msc",i);
+            i++;
+        }
+        st[20]=student("Ultraman","Bsc",20);
+
+    }
+            uint256 number;
+
+    function store(uint256 num) public {
+        number = num;
+      }
+                uint256 first=301;
+                uint256 sec=302;
+                uint256 third=303;
+                uint256 fourth=304;
+
+
+      function check() public view returns(uint256)
+      {
+          if (number>0&&number <=5)
+          {
+              return first;
+          }
+          if (number>5&&number <=10)
+          {
+              return sec;
+          }
+          if (number>10&&number <=15)   
+          {
+              return third;
+          }
+          if (number>15&&number <=20)
+          {
+              return fourth;
+          }
+          else
+          {
+              return 0;
+          }
+      }
+      function display()public view returns(string memory)
+      {
+          return st[20].name;
+      }   
+}
