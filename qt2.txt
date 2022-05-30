@@ -1,0 +1,54 @@
+import pandas as pd
+from numpy import loadtxt
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.wrappers.scikit_learn import KerasClassifier
+
+dataframe = pd.read_csv("pima-indians-diabetes.csv", header=None)
+dataset=dataframe.values
+def create_baseline():
+    model = Sequential()
+    model.add(Dense(12,activation='relu',input_dim=8))
+    model.add(Dense(8,activation='relu'))
+    model.add(Dense(1,activation='sigmoid'))
+    model.compile(loss='binary_crossentropy',optimizer='adam',metrics='accuracy')
+    X=dataset[:,0:8].astype(float)
+    Y=dataset[:,8]
+    return model
+
+from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import cross_val_score
+estimator = KerasClassifier(build_fn =create_baseline, nb_epoch =200, batch_size=16, verbose=0)
+kfold = StratifiedKFold(n_splits=10, shuffle=True)
+results = cross_val_score(estimator, X,Y, cv=kfold)
+print("Baseline: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
+
+
+
+
+#predict
+from tensorflow.keras.utils import to_categorical
+from keras.models import Sequential
+from keras.layers import Dense,Conv2D,Flatten
+import matplotlib.pyplot as plt
+import tensorflow as tf
+(X_train,Y_train),(X_test,Y_test)=tf.keras.datasets.mnist.load_data("")
+plt.imshow(X_test[0])
+plt.show()
+print(X_train[0].shape)
+X_train=X_train.reshape(60000,28,28,1)
+X_test=X_test.reshape(10000,28,28,1)
+Y_train=to_categorical(Y_train)
+Y_test=to_categorical(Y_test)
+Y_train[0]
+model=Sequential()
+model.add(Conv2D(64,kernel_size=3,activation='relu',input_shape=(28,28,1)))
+model.add(Conv2D(32,kernel_size=3,activation='relu'))
+model.add(Flatten())
+model.add(Dense(10,activation='softmax'))
+model.compile(optimizer='adam',loss='categorical_crossentropy',metrics=['accuracy'])
+model.fit(X_train,Y_train,epochs=1)
+model.summary()
+Image = model.predict(X_test[:1])
+from numpy import argmax
+argmax(Image)
